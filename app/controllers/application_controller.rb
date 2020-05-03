@@ -11,4 +11,12 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  get '/signup' do
+    erb :signup
+  end
+
+  post '/signup' do
+    if username = 
+  end
+
 end

@@ -10,4 +10,12 @@ describe ApplicationController do
     expect(last_response.status).to eq(200)
     expect(last_response.body).to include("Lift Tracker")
   end
+
+  it 'has a link to the signup page' do
+    get '/signup'
+
+    expect(last_response.status).to eq(200)
+    expect(last_response.body).to include("<form action='/signup'>")
+  end
+
 end
