@@ -1,3 +1,4 @@
+
 @media screen {
   /* --- Reset Styles --- */
   * {
@@ -17,6 +18,21 @@
     color: #333;
     font-family: Sans-Serif;
     line-height: 18px;
+  }
+
+  input[type="submit"] {
+    padding: 5px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    box-shadow: -1px 1px 1px #222, 1px -1px 1px #222, -2px 2px 2px #111, 2px -2px 2px #111;
+  }
+
+  input[type="submit"]:active {
+    box-shadow: inset 1px -1px #111, inset -1px 1px #111;
+  }
+
+  .error-message {
+    color: red;
   }
 
   .wrapper {
@@ -113,8 +129,6 @@
     line-height: 24px;
   }
 
-  input[type="submit"] {
-    box-shadow: -1px 1px #222, 1px -1px #222;
-  }
+  
 
 }

@@ -5,7 +5,8 @@ class ApplicationController < Sinatra::Base
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
-    enable :session
+    enable :sessions
+    set :session_secret, "my_secret"
   end
 
   get "/" do
@@ -13,24 +14,69 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/signup' do
-    erb :signup
+    if !is_logged_in?
+      @message = session[:message]
+      erb :signup
+    else
+      redirect "users/#{current_user.slug}"
+    end
+    
   end
 
   post '/signup' do
     check_params(params, "signup")
-    username = params[:username]
-    pass = params[:password]
-    new_user = User.create(username: username, password: pass)
-    redirect "/users/#{new_user.slug}"
+    if !User.find_by(username: params[:username])
+      username = params[:username]
+      pass = params[:password]
+      new_user = User.create(username: username, password: pass)
+      session.clear
+      session[:id] = new_user.id
+      redirect "/users/#{new_user.slug}"
+    else
+      set_session_message("Username #{params[:username]} is already taken, please choose a unique username.")
+      redirect '/signup'
+    end
+   
+  end
+
+  get '/login' do
+    if !is_logged_in?
+      @message = session[:message]
+      erb :login
+    else
+      redirect "users/#{current_user.slug}"
+    end
+  end
+
+  post '/login' do
+    check_params(params, 'login')
+    if user = User.find_by(username: params[:username])
+      if user.authenticate(params[:password])
+        session[:id] = user.id
+        redirect "users/#{user.slug}"
+      else
+        set_session_message("Incorrect Password")
+        redirect '/login'
+      end
+    else
+      set_session_message("Username not found")
+      redirect '/login'
+    end
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/'
   end
 
   helpers do
+
+    def set_session_message(message)
+      session[:message] = message
+    end
     
     def is_logged_in?
-      if session[:id]
-        return true
-      end
-      return false
+      session[:id]
     end
 
     def current_user

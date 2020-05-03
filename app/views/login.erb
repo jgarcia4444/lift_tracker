@@ -1,15 +1,16 @@
+<h1>Login Form</h1>
 <div class="wrapper">
-    <h1>Signup Form</h1>
-    <form action="/signup" method="post">
-        <%if @message%>
-            <p class="error-message"><%=@message%></p>
-        <%end%>
+    <%if @message%>
+        <p class="error-message"><%=@message%></p>
+    <%end%>
+    <form action="/login" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" id="username">
         <br>
         <br>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password">
-        <input type="submit" value="Signup">
+        <br>
+        <input type="submit" value="Login">
     </form>
 </div>
