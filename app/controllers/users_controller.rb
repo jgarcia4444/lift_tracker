@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 
   # GET: /users/5/edit
   get "/users/:slug/edit" do
+    @user = User.find_by_slug(params[:slug])
     erb :"/users/edit.html"
   end
 

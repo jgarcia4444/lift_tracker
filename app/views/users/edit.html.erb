@@ -1,1 +1,12 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<h1>Edit Username Form</h1>
+<div class="wrapper">
+    <form action="/users/<%=@user.slug%>" method="post">
+        <p>Current Username: <%=@user.username%></p>
+        <input type="hidden" name="_method" id="hidden" value="patch">
+        <label for="new_username">New Username:</label>
+        <input type="text" name="new_username" id="new_username">
+        <br>
+        <br>
+        <input type="submit" value="Update">
+    </form>
+</div>
