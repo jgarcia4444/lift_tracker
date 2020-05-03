@@ -1,1 +1,12 @@
-<h1>This is the Model's index page.</h1>
+<h1>All Users</h1>
+<div class="wrapper" style="background-color: lightblue;">
+    <%if !@users.empty?%>
+        <%@users.each do |user|%>
+            <div class="wrapper">
+                <h3><%=user.username%></h3>
+            </div>
+        <%end%>
+    <%else%>
+        <h3>No users have signed up yet.</h3>
+    <%end%>
+</div>
