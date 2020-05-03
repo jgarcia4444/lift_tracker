@@ -6,6 +6,10 @@ RSpec.describe User do
         @user = User.create(username: "Test 1", password: "password")
     end
 
+    after do
+        User.destroy_all
+    end
+
     it 'can slug the username' do
         expect(@user.slug).to eq("Test-1")
     end
