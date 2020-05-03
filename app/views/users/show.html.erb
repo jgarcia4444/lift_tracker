@@ -1,1 +1,12 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1>Username: <%=@user.username%></h1>
+<div class="wrapper">
+    <%if !@user.user_lifts.empty?%>
+        <%@user.user_lifts.each do |user_lift|%>
+            <h3><%=user_lift.lift_type.name%></h3>
+            <p><%=user_lift.weight%></p>
+        <%end%>
+    <%else%>
+        <h3>No lifts recorded yet!.</h3>
+    <%end%>
+</div>
+<a href="/user_lifts/new">Add New Lift</a>

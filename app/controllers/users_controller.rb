@@ -15,23 +15,23 @@ class UsersController < ApplicationController
     redirect "/users"
   end
 
-  # GET: /users/5
-  get "/users/:id" do
+  get "/users/:slug" do
+    @user = User.find_by_slug(params[:slug])
     erb :"/users/show.html"
   end
 
   # GET: /users/5/edit
-  get "/users/:id/edit" do
+  get "/users/:slug/edit" do
     erb :"/users/edit.html"
   end
 
   # PATCH: /users/5
-  patch "/users/:id" do
+  patch "/users/:slug" do
     redirect "/users/:id"
   end
 
   # DELETE: /users/5/delete
-  delete "/users/:id/delete" do
+  delete "/users/:slug/delete" do
     redirect "/users"
   end
 end

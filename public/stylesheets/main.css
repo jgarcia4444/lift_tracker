@@ -112,4 +112,9 @@
     font-size: 18px;
     line-height: 24px;
   }
+
+  input[type="submit"] {
+    box-shadow: -1px 1px #222, 1px -1px #222;
+  }
+
 }
