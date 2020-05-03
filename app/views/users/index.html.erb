@@ -2,9 +2,11 @@
 <div class="wrapper" style="background-color: lightblue;">
     <%if !@users.empty?%>
         <%@users.each do |user|%>
-            <div class="wrapper">
-                <h3><%=user.username%></h3>
-            </div>
+            <a href="users/<%=user.slug%>">
+                <div class="wrapper">
+                    <h3><%=user.username%></h3>
+                </div>
+            </a>
         <%end%>
     <%else%>
         <h3>No users have signed up yet.</h3>

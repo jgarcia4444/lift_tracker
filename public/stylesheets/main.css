@@ -35,6 +35,10 @@
     color: red;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .wrapper {
     border-radius: 5px;
     background: #fff;
