@@ -89,14 +89,10 @@ class ApplicationController < Sinatra::Base
 
       params.each do |k,v|
         if v.empty?
-          set_empty_message("#{k.to_s} cannot be left empty.")
+          set_session_message("#{k.to_s.split("_").join(" ").capitalize} cannot be left empty.")
           redirect "/#{current_page}"
         end
       end
-    end
-
-    def set_empty_message(message)
-      session[:message] = message
     end
 
   end

@@ -23,13 +23,19 @@ class UsersController < ApplicationController
 
   # GET: /users/5/edit
   get "/users/:slug/edit" do
+    @message = session[:message]
     @user = User.find_by_slug(params[:slug])
     erb :"/users/edit.html"
   end
 
   # PATCH: /users/5
   patch "/users/:slug" do
-    redirect "/users/:id"
+    @user = User.find_by_slug(params[:slug])
+    check_params(params, "users/#{@user.slug}/edit")
+    if current_user == @user 
+      @user.update(:username => params[:new_username])
+    end
+    redirect "/users/#{@user.slug}"
   end
 
   # DELETE: /users/5/delete

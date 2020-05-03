@@ -1,6 +1,10 @@
 <h1>Edit Username Form</h1>
 <div class="wrapper">
     <form action="/users/<%=@user.slug%>" method="post">
+        <%if @message%>
+            <p><%=@message%></p>
+        <%end%>
+        
         <p>Current Username: <%=@user.username%></p>
         <input type="hidden" name="_method" id="hidden" value="patch">
         <label for="new_username">New Username:</label>
