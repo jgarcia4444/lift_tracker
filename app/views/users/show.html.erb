@@ -8,7 +8,9 @@
     <%else%>
         <h3>No lifts recorded yet!.</h3>
     <%end%>
-    <a href="/user_lifts/new">Add New Lift</a>
+    <%if current_user == @user%>
+        <a href="/user-lifts/new">Add New Lift</a>
+    <%end%>
 </div>
 <%if current_user == @user%>
     <div class="wrapper">
