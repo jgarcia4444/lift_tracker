@@ -8,6 +8,13 @@
     <%else%>
         <h3>No lifts recorded yet!.</h3>
     <%end%>
+    <a href="/user_lifts/new">Add New Lift</a>
 </div>
-<a href="/user_lifts/new">Add New Lift</a>
-<a href="/logout">Logout</a>
+
+<div class="wrapper">
+    <a href="/logout">Logout</a>
+    <br>
+    <br>
+    <a href="/users/<%=@user.slug%>/delete">Delete User</a>
+</div>
+

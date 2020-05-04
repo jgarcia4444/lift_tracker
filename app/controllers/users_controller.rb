@@ -38,6 +38,15 @@ class UsersController < ApplicationController
     redirect "/users/#{@user.slug}"
   end
 
+  get "/users/:slug/delete" do
+    @user = User.find_by_slug(params[:slug])
+    if current_user == @user
+      erb :'users/delete.html'
+    else
+      redirect "/users/#{@user.slug}"
+    end
+  end
+
   # DELETE: /users/5/delete
   delete "/users/:slug/delete" do
     redirect "/users"
