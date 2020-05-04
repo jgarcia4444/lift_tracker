@@ -1,0 +1,12 @@
+<h1>Are you sure you want to continue with deletion?</h1>
+
+<div class="wrapper">
+    <form action="/users/<%=@user.slug%>/delete" method="post">
+        <input type="hidden" name="_method" id="hidden" value="delete">
+        <p>There is no recovering your username and lifts.</p>
+        <%if @message%>
+            <p><%=@message%></p>
+        <%end%>
+        <input type="submit" value="Delete User">
+    </form>
+</div>
