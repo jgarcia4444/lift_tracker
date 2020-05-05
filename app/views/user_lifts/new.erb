@@ -1,10 +1,13 @@
 <h1>Record New Lift:</h1>
-<form action="/user_lifts" method="post">
+<form action="/user-lifts" method="post">
     <div class="wrapper" style="background-color: lightblue;">
+        <%if @message%>
+            <p><%=@message%></p>
+        <%end%>
         <h3>Lift Type:</h3>
         <%@lift_types.each do |lift_type|%>
             <label for="lift_type_<%=lift_type.id%>"><%=lift_type.name%></label>
-            <input type="radio" name="lift_type_id" value="<%=lift_type.id%>" id="lift_type_<%=lift_type.id%>">
+            <input type="radio" name="lift_type" value="<%=lift_type.id%>" id="lift_type_<%=lift_type.id%>">
         <%end%>
         <br>
         <br>
