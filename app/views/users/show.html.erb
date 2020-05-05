@@ -1,16 +1,25 @@
 <h1>Username: <%=@user.username%></h1>
 <div class="wrapper">
-    <%if !@user.user_lifts.empty?%>
-        <%@user.user_lifts.each do |user_lift|%>
-            <h3><%=user_lift.lift_type.name%></h3>
-            <p><%=user_lift.weight%></p>
+    <div>
+        <%if !@user.user_lifts.empty?%>
+            <%@user.user_lifts.each do |user_lift|%>
+                <h3><%=user_lift.lift_type.name%></h3>
+                <p><%=user_lift.weight%></p>
+                <%if current_user == @user%>
+                    <a id="edit-anchor" href="/user-lifts/<%=user_lift.id%>/edit">Edit</a>
+                    <a id="delete-anchor" href="/user-lifts/<%=user_lift.id%>/delete">Delete</a>
+                <%end%>
+            <%end%>
+        <%else%>
+            <h3>No lifts recorded yet!.</h3>
         <%end%>
-    <%else%>
-        <h3>No lifts recorded yet!.</h3>
-    <%end%>
-    <%if current_user == @user%>
-        <a href="/user-lifts/new">Add New Lift</a>
-    <%end%>
+    </div>
+    <div>
+        <%if current_user == @user%>
+            <a href="/user-lifts/new">Add New Lift</a>
+        <%end%>
+    </div>
+    
 </div>
 <%if current_user == @user%>
     <div class="wrapper">

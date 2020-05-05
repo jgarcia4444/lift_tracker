@@ -5,6 +5,7 @@
             <a href="users/<%=user.slug%>">
                 <div class="wrapper">
                     <h3><%=user.username%></h3>
+                    <h4>Lifts Recorded: <%=user.user_lifts.count%></h4>
                 </div>
             </a>
         <%end%>

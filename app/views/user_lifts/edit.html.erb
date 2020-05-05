@@ -1,0 +1,16 @@
+<h1>Edit Lift:</h1>
+<div class="wrapper">
+    <form action="/user-lifts/<%=@user_lift.id%>/edit" method="post">
+        <input type="hidden" name="_method" id="hidden" value="patch">
+        <h3>Change Lift Type:</h3>
+        <%@lift_types.each do |lift_type|%>
+            <label for="lift_type_<%=lift_type.id%>"><%=lift_type.name%></label>
+            <input type="radio" name="lift_type" value="<%=lift_type.id%>" id="lift_type_<%=lift_type.id%>" <%="checked" if lift_type == @user_lift.lift_type%>>
+        <%end%>
+        <h3>Change Weight:</h3>
+        <input type="text" name="weight">
+        <br>
+        <br>
+        <input type="submit" value="Edit">
+    </form>
+</div>
