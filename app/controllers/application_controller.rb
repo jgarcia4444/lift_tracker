@@ -10,7 +10,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    erb :index
+    if is_logged_in?
+      redirect "/users/#{current_user.slug}"
+    else
+      erb :index
+    end
   end
 
   get '/signup' do
@@ -26,11 +30,8 @@ class ApplicationController < Sinatra::Base
   post '/signup' do
     check_params(params, "signup")
     if !User.find_by(username: params[:username])
-      username = params[:username]
-      pass = params[:password]
-      new_user = User.create(username: username, password: pass)
-      session.clear
-      session[:id] = new_user.id
+      new_user = User.create(params)
+      clear_session_and_set_id(new_user)
       redirect "/users/#{new_user.slug}"
     else
       set_session_message("Username #{params[:username]} is already taken, please choose a unique username.")
@@ -51,13 +52,7 @@ class ApplicationController < Sinatra::Base
   post '/login' do
     check_params(params, 'login')
     if user = User.find_by(username: params[:username])
-      if user.authenticate(params[:password])
-        session[:id] = user.id
-        redirect "users/#{user.slug}"
-      else
-        set_session_message("Incorrect Password")
-        redirect '/login'
-      end
+      login_authentication(user, params[:password])
     else
       set_session_message("Username not found")
       redirect '/login'
@@ -70,6 +65,21 @@ class ApplicationController < Sinatra::Base
   end
 
   helpers do
+
+    def login_authentication(user, possible_password)
+      if user.authenticate(possible_password)
+        clear_session_and_set_id(user)
+        redirect "users/#{user.slug}"
+      else
+        set_session_message("Incorrect Password")
+        redirect '/login'
+      end
+    end
+
+    def clear_session_and_set_id(user)
+        session.clear
+        session[:id] = user.id
+    end
 
     def set_session_message(message)
       session[:message] = message
