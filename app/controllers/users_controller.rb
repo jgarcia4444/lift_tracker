@@ -52,9 +52,8 @@ class UsersController < ApplicationController
     if current_user = User.find_by_slug(params[:slug])
       current_user.destroy
       session.clear
-      redirect "/users"
+      redirect "/"
     else
-      
       redirect "/users/#{params[:slug]}/delete"
     end
     

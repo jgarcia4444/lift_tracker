@@ -17,7 +17,6 @@ class UserLiftsController < ApplicationController
     end
 
     post '/user-lifts' do
-        
         check_params(params, "user-lifts/new")
         weight_input_check(params[:weight], "user-lifts/new")
         if !params.has_key?(:lift_type)
@@ -30,7 +29,32 @@ class UserLiftsController < ApplicationController
     end
 
     patch "/user-lifts/:id/edit" do
-        
+        lift = UserLift.find(params[:id])
+        if params[:weight].empty?
+            lift.update(:lift_type_id => params[:lift_type])
+            redirect "/users/#{current_user.slug}"
+        else
+            weight_input_check(params[:weight], "user-lifts/#{lift.id}/edit")
+            lift.update(:lift_type_id => params[:lift_type], :weight => params[:weight])
+            redirect "/users/#{current_user.slug}"
+        end
+    end
+
+    get '/user-lifts/:id/delete' do
+        @user_lift = UserLift.find(params[:id])
+        erb :'user_lifts/delete.html'
+    end
+
+    delete '/user-lifts/:id/delete' do
+        @message = session[:message]
+        lift_for_deletion = UserLift.find(params[:id])
+        if current_user == lift_for_deletion.user
+            lift_for_deletion.destroy
+            redirect "/users/#{current_user.slug}"
+        else
+            set_session_message("You cannnot delete someone else's lift.")
+            redirect "/user-lifts/#{lift_for_deletion.id}/delete"
+        end
     end
 
     helpers do
