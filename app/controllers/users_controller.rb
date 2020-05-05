@@ -56,6 +56,5 @@ class UsersController < ApplicationController
     else
       redirect "/users/#{params[:slug]}/delete"
     end
-    
   end
 end
