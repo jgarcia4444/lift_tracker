@@ -9,7 +9,7 @@ class UserLiftsController < ApplicationController
     get '/user-lifts/:id/edit' do
         @user_lift = UserLift.find(params[:id])
         @lift_types = LiftType.all
-        if current_user == @user_lift.user
+        if validate_access(current_user, @user_lift.user)
             erb :'user_lifts/edit.html'
         else
             redirect "/users"
@@ -23,7 +23,6 @@ class UserLiftsController < ApplicationController
             set_session_message("An option needs to be selected for the lift type")
             redirect "/user-lifts/new"
         end
-
         UserLift.create(:weight => params[:weight], :lift_type_id => params[:lift_type], :user_id => current_user.id)
         redirect "/users/#{current_user.slug}"
     end
@@ -42,13 +41,18 @@ class UserLiftsController < ApplicationController
 
     get '/user-lifts/:id/delete' do
         @user_lift = UserLift.find(params[:id])
-        erb :'user_lifts/delete.html'
+        if validate_access(current_user, @user_lift.user)
+            erb :'user_lifts/delete.html'
+        else
+            redirect '/users'
+        end
+        
     end
 
     delete '/user-lifts/:id/delete' do
         @message = session[:message]
         lift_for_deletion = UserLift.find(params[:id])
-        if current_user == lift_for_deletion.user
+        if validate_access(current_user, lift_for_deletion.user)
             lift_for_deletion.destroy
             redirect "/users/#{current_user.slug}"
         else

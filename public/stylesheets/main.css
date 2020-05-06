@@ -35,7 +35,17 @@
     color: red;
   }
 
+  .nav-list {
+    background-color: lightblue;
+  }
+
+  li {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
   a {
+    display: inline-block;
     text-decoration: none;
   }
 

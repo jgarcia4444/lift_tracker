@@ -53,13 +53,4 @@ class UsersController < ApplicationController
     end
   end
 
-  helpers do
-    def validate_access(logged_in_user, user_to_be_edited)
-      if logged_in_user == user_to_be_edited
-        return true
-      else 
-        return false
-    end
-  end
-
 end
