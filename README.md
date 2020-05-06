@@ -11,5 +11,7 @@ Your README.md includes a short description, install instructions, a contributor
     * open browser to corresponding port after the shotgun command.
 
 #### Contributing
-* **If you find a bug** [submit a new issue] (https://github.com/jgarcia4444/lift_tracker/issues)
-* **If your have written code to fix a bug** [submit a pull request] (https://github.com/jgarcia4444/lift_tracker/pulls)
+* **If you find a bug** [submit a new issue] https://github.com/jgarcia4444/lift_tracker/issues
+* **If your have written code to fix a bug** [submit a pull request] https://github.com/jgarcia4444/lift_tracker/pulls
+
+* **MIT License https://github.com/jgarcia4444/lift_tracker/blob/master/LICENSE.md
