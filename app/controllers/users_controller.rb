@@ -6,50 +6,45 @@ class UsersController < ApplicationController
     erb :"/users/index.html"
   end
 
-  # GET: /users/new
-  get "/users/new" do
-    erb :"/users/new.html"
-  end
-
-  # POST: /users
-  post "/users" do
-    redirect "/users"
-  end
-
   get "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
     erb :"/users/show.html"
   end
 
-  # GET: /users/5/edit
   get "/users/:slug/edit" do
     @message = session[:message]
     @user = User.find_by_slug(params[:slug])
-    erb :"/users/edit.html"
+    if validate_acces(current_user, @user)
+      erb :"/users/edit.html"
+    else
+      redirect '/users'
+    end
   end
 
   # PATCH: /users/5
   patch "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
     check_params(params, "users/#{@user.slug}/edit")
-    if current_user == @user 
+    if validate_access(current_user, @user)
       @user.update(:username => params[:new_username])
+      redirect "/users/#{@user.slug}"
+    else
+      redirect '/users'
     end
-    redirect "/users/#{@user.slug}"
   end
 
   get "/users/:slug/delete" do
     @user = User.find_by_slug(params[:slug])
-    if current_user == @user
+    if validate_access(current_user, @user)
       erb :'users/delete.html'
     else
-      redirect "/users/#{@user.slug}"
+      redirect "/users"
     end
   end
 
   # DELETE: /users/5/delete
   delete "/users/:slug/delete" do
-    if current_user = User.find_by_slug(params[:slug])
+    if validate_acces(current_user, User.find_by_slug(params[:slug]))
       current_user.destroy
       session.clear
       redirect "/"
@@ -57,4 +52,14 @@ class UsersController < ApplicationController
       redirect "/users/#{params[:slug]}/delete"
     end
   end
+
+  helpers do
+    def validate_access(logged_in_user, user_to_be_edited)
+      if logged_in_user == user_to_be_edited
+        return true
+      else 
+        return false
+    end
+  end
+
 end
