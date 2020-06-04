@@ -17,9 +17,13 @@
     <div class="wrapper">
       <nav>
         <ul id="nav-list">
-          <li><a href="/">Signup / Login</a></li>
+          
           <li><a href="/users">Users</a></li>
-          <li><a id="logout" href="/logout">Logout</a></li>
+          <% if !current_user %>
+            <li><a href="/">Signup / Login</a></li>
+          <% else %>
+            <li><a href="/logout">Logout</a></li>
+          <%end%>
         </ul>
       </nav>
         <%= yield %>
