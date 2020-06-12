@@ -29,14 +29,9 @@ class UserLiftsController < ApplicationController
 
     patch "/user-lifts/:id/edit" do
         lift = UserLift.find(params[:id])
-        if params[:weight].empty?
-            lift.update(:lift_type_id => params[:lift_type])
-            redirect "/users/#{current_user.slug}"
-        else
-            weight_input_check(params[:weight], "user-lifts/#{lift.id}/edit")
-            lift.update(:lift_type_id => params[:lift_type], :weight => params[:weight])
-            redirect "/users/#{current_user.slug}"
-        end
+        weight_input_check(params[:weight], "user-lifts/#{lift.id}/edit")
+        lift.update(:lift_type_id => params[:lift_type], :weight => params[:weight])
+        redirect "/users/#{current_user.slug}"
     end
 
     get '/user-lifts/:id/delete' do
@@ -62,17 +57,14 @@ class UserLiftsController < ApplicationController
     end
 
     helpers do
-        def deslug_key(key)
-            key_array = key.split("_")
-            key_array.join(" ")
+        def weight_input_check(weight_value, current_page)
+            if weight_value.to_i < 0
+                set_session_message("The value of weight must be a positive integer.")
+                redirect "/#{current_page}"
+            end
         end
     end
 
-    def weight_input_check(weight_value, current_page)
-        if weight_value.to_i < 0
-            set_session_message("The value of weight must be a positive integer.")
-            redirect "/#{current_page}"
-        end
-    end
+    
 
 end

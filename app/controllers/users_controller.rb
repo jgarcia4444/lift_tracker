@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-  # GET: /users
   get "/users" do
     @users = User.all
     erb :"/users/index.html"
@@ -14,14 +13,13 @@ class UsersController < ApplicationController
   get "/users/:slug/edit" do
     @message = session[:message]
     @user = User.find_by_slug(params[:slug])
-    if validate_acces(current_user, @user)
+    if validate_access(current_user, @user)
       erb :"/users/edit.html"
     else
       redirect '/users'
     end
   end
 
-  # PATCH: /users/5
   patch "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
     check_params(params, "users/#{@user.slug}/edit")
@@ -42,7 +40,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE: /users/5/delete
   delete "/users/:slug/delete" do
     if validate_access(current_user, User.find_by_slug(params[:slug]))
       current_user.destroy

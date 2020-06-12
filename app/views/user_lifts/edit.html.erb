@@ -8,7 +8,7 @@
             <input type="radio" name="lift_type" value="<%=lift_type.id%>" id="lift_type_<%=lift_type.id%>" <%="checked" if lift_type == @user_lift.lift_type%>>
         <%end%>
         <h3>Change Weight:</h3>
-        <input type="text" name="weight">
+        <input type="text" name="weight" value="<%=@user_lift.weight%>">
         <br>
         <br>
         <input type="submit" value="Edit">
